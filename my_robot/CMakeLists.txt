@@ -36,6 +36,7 @@ install(
   DIRECTORY 
     config 
     description 
+    meshes
     launch 
     worlds
   DESTINATION share/${PROJECT_NAME}
