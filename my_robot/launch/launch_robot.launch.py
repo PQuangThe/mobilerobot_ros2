@@ -48,6 +48,8 @@ def generate_launch_description():
 
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
 
+    #robot_localization_file_path = os.path.join(get_package_share_directory(package_name), 'config', 'ekf.yaml')
+
     controller_params_file = os.path.join(get_package_share_directory(package_name),'config','my_controllers.yaml')
 
     controller_manager = Node(
@@ -86,6 +88,19 @@ def generate_launch_description():
     )
 
 
+    robot_localization_file_path = os.path.join(get_package_share_directory(package_name), 'config', 'ekf.yaml')
+    robot_localization = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[
+            robot_localization_file_path
+        ],
+        remappings=[('odometry/filtered', 'odom')],
+        # remappings=[("odometry/filtered", "odom")],
+    )
+
     # Code for delaying a node (I haven't tested how effective it is)
     # 
     # First add the below lines to imports
@@ -111,5 +126,6 @@ def generate_launch_description():
         twist_mux,
         delayed_controller_manager,
         delayed_diff_drive_spawner,
-        delayed_joint_broad_spawner
+        delayed_joint_broad_spawner,
+        robot_localization
     ])
