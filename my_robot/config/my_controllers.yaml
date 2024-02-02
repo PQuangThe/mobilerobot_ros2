@@ -23,9 +23,11 @@ diff_cont:
 
     use_stamped_vel: false
 
+    enable_odom_tf: false
 
 
-    open_loop: true
+
+    #open_loop: true
 
     # wheels_per_side: x
     # wheel_separation_multiplier: x

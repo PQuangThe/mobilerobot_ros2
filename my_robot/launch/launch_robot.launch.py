@@ -65,6 +65,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         arguments=["diff_cont"],
+        #remappings=[('/odom', '/wheel_odom')],
     )
 
     delayed_diff_drive_spawner = RegisterEventHandler(

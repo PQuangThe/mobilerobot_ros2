@@ -2,10 +2,10 @@ ekf_filter_node:
     ros__parameters:
 
         frequency: 50.0
-
+        two_d_mode: true
         publish_tf: true
 
-        #map_frame: map              # Defaults to "map" if unspecified
+        map_frame: map              # Defaults to "map" if unspecified
         odom_frame: odom            # Defaults to "odom" if unspecified
         base_link_frame: base_link  # Defaults to "base_link" ifunspecified
         world_frame: odom           # Defaults to the value ofodom_frame if unspecified
@@ -25,8 +25,8 @@ ekf_filter_node:
         imu0_config: [false, false, false,
                       false, false, false,
                       false, false, false,
-                      false, false, true,
-                      true,  false, false]
+                      false, true,  false,
+                      false, false, true]
 
         imu0_differential: false
         imu0_relative: true
