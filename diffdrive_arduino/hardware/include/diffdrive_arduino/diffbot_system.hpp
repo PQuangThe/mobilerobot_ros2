@@ -49,10 +49,14 @@ struct Config
   int timeout_ms = 0;
   int enc_counts_per_rev_l = 0;
   int enc_counts_per_rev_r = 0;
-  int pid_p = 0;
-  int pid_d = 0;
-  int pid_i = 0;
-  int pid_o = 0;
+  int pid_p_r = 0;
+  int pid_d_r = 0;
+  int pid_i_r = 0;
+  int pid_o_r = 0;
+  int pid_p_l = 0;
+  int pid_d_l = 0;
+  int pid_i_l = 0;
+  int pid_o_l = 0;
 };
 
 

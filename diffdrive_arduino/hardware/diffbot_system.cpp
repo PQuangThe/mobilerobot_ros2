@@ -44,12 +44,16 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
   cfg_.timeout_ms = std::stoi(info_.hardware_parameters["timeout_ms"]);
   cfg_.enc_counts_per_rev_l = std::stoi(info_.hardware_parameters["enc_counts_per_rev_l"]);
   cfg_.enc_counts_per_rev_r = std::stoi(info_.hardware_parameters["enc_counts_per_rev_r"]);
-  if (info_.hardware_parameters.count("pid_p") > 0)
+  if ((info_.hardware_parameters.count("pid_p_r") & info_.hardware_parameters.count("pid_p_l")) > 0)
   {
-    cfg_.pid_p = std::stoi(info_.hardware_parameters["pid_p"]);
-    cfg_.pid_d = std::stoi(info_.hardware_parameters["pid_d"]);
-    cfg_.pid_i = std::stoi(info_.hardware_parameters["pid_i"]);
-    cfg_.pid_o = std::stoi(info_.hardware_parameters["pid_o"]);
+    cfg_.pid_p_r = std::stoi(info_.hardware_parameters["pid_p_r"]);
+    cfg_.pid_d_r = std::stoi(info_.hardware_parameters["pid_d_r"]);
+    cfg_.pid_i_r = std::stoi(info_.hardware_parameters["pid_i_r"]);
+    cfg_.pid_o_r = std::stoi(info_.hardware_parameters["pid_o_r"]);
+    cfg_.pid_p_l = std::stoi(info_.hardware_parameters["pid_p_l"]);
+    cfg_.pid_d_l = std::stoi(info_.hardware_parameters["pid_d_l"]);
+    cfg_.pid_i_l = std::stoi(info_.hardware_parameters["pid_i_l"]);
+    cfg_.pid_o_l = std::stoi(info_.hardware_parameters["pid_o_l"]);
   }
   else
   {
@@ -179,9 +183,13 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_activate(
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
-  if (cfg_.pid_p > 0)
+  if (cfg_.pid_p_r > 0)
   {
-    comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o);
+    comms_.set_pid_r_values(cfg_.pid_p_r,cfg_.pid_d_r,cfg_.pid_i_r,cfg_.pid_o_r);
+  }
+  if (cfg_.pid_p_l > 0)
+  {
+    comms_.set_pid_l_values(cfg_.pid_p_l,cfg_.pid_d_l,cfg_.pid_i_l,cfg_.pid_o_l);
   }
   RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "Successfully activated!");
 
@@ -231,6 +239,7 @@ hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::wr
   int motor_l_counts_per_loop = wheel_l_.cmd / wheel_l_.rads_per_count / cfg_.loop_rate;
   int motor_r_counts_per_loop = wheel_r_.cmd / wheel_r_.rads_per_count / cfg_.loop_rate;
   comms_.set_motor_values(motor_l_counts_per_loop, motor_r_counts_per_loop);
+  RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "motor values %d %d", motor_l_counts_per_loop, motor_r_counts_per_loop);
   return hardware_interface::return_type::OK;
 }
 
