@@ -7,20 +7,20 @@
                 <plugin>diffdrive_arduino/DiffDriveArduinoHardware</plugin>
                 <param name="left_wheel_name">left_wheel_joint</param>
                 <param name="right_wheel_name">right_wheel_joint</param>
-                <param name="loop_rate">40</param>
+                <param name="loop_rate">100</param>
                 <param name="device">/dev/ttyUSB0</param>
-                <param name="baud_rate">115200</param>
+                <param name="baud_rate">57600</param>
                 <param name="timeout_ms">1000</param>
-                <param name="enc_counts_per_rev_r">39300</param>
-                <param name="enc_counts_per_rev_l">39300</param>
-                <param name="pid_p_r">21</param>
-                <param name="pid_d_r">15</param>
+                <param name="enc_counts_per_rev_r">1560</param>
+                <param name="enc_counts_per_rev_l">1560</param>
+                <param name="pid_p_r">200</param>
+                <param name="pid_d_r">120</param>
                 <param name="pid_i_r">0</param>
-                <param name="pid_o_r">1000</param>
-                <param name="pid_p_l">20</param>
-                <param name="pid_d_l">10</param>
+                <param name="pid_o_r">500</param>
+                <param name="pid_p_l">180</param>
+                <param name="pid_d_l">122</param>
                 <param name="pid_i_l">0</param>
-                <param name="pid_o_l">1000</param>
+                <param name="pid_o_l">500</param>
             </hardware>
             <joint name="left_wheel_joint">
                 <command_interface name="velocity"/>

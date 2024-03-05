@@ -44,22 +44,15 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
   cfg_.timeout_ms = std::stoi(info_.hardware_parameters["timeout_ms"]);
   cfg_.enc_counts_per_rev_l = std::stoi(info_.hardware_parameters["enc_counts_per_rev_l"]);
   cfg_.enc_counts_per_rev_r = std::stoi(info_.hardware_parameters["enc_counts_per_rev_r"]);
-  if ((info_.hardware_parameters.count("pid_p_r") & info_.hardware_parameters.count("pid_p_l")) > 0)
-  {
-    cfg_.pid_p_r = std::stoi(info_.hardware_parameters["pid_p_r"]);
-    cfg_.pid_d_r = std::stoi(info_.hardware_parameters["pid_d_r"]);
-    cfg_.pid_i_r = std::stoi(info_.hardware_parameters["pid_i_r"]);
-    cfg_.pid_o_r = std::stoi(info_.hardware_parameters["pid_o_r"]);
-    cfg_.pid_p_l = std::stoi(info_.hardware_parameters["pid_p_l"]);
-    cfg_.pid_d_l = std::stoi(info_.hardware_parameters["pid_d_l"]);
-    cfg_.pid_i_l = std::stoi(info_.hardware_parameters["pid_i_l"]);
-    cfg_.pid_o_l = std::stoi(info_.hardware_parameters["pid_o_l"]);
-  }
-  else
-  {
-    RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "PID values not supplied, using defaults.");
-  }
-  
+  cfg_.pid_p_r = std::stoi(info_.hardware_parameters["pid_p_r"]);
+  cfg_.pid_d_r = std::stoi(info_.hardware_parameters["pid_d_r"]);
+  cfg_.pid_i_r = std::stoi(info_.hardware_parameters["pid_i_r"]);
+  cfg_.pid_o_r = std::stoi(info_.hardware_parameters["pid_o_r"]);
+  cfg_.pid_p_l = std::stoi(info_.hardware_parameters["pid_p_l"]);
+  cfg_.pid_d_l = std::stoi(info_.hardware_parameters["pid_d_l"]);
+  cfg_.pid_i_l = std::stoi(info_.hardware_parameters["pid_i_l"]);
+  cfg_.pid_o_l = std::stoi(info_.hardware_parameters["pid_o_l"]);
+
 
   wheel_l_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev_l);
   wheel_r_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev_r);
@@ -156,6 +149,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_configure(
     comms_.disconnect();
   }
   comms_.connect(cfg_.device, cfg_.baud_rate, cfg_.timeout_ms);
+  rclcpp::sleep_for(std::chrono::seconds(2));
   RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "Successfully configured!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
@@ -183,14 +177,11 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_activate(
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
-  if (cfg_.pid_p_r > 0)
-  {
-    comms_.set_pid_r_values(cfg_.pid_p_r,cfg_.pid_d_r,cfg_.pid_i_r,cfg_.pid_o_r);
-  }
-  if (cfg_.pid_p_l > 0)
-  {
-    comms_.set_pid_l_values(cfg_.pid_p_l,cfg_.pid_d_l,cfg_.pid_i_l,cfg_.pid_o_l);
-  }
+  
+  comms_.set_pid_r_values(cfg_.pid_p_r,cfg_.pid_d_r,cfg_.pid_i_r,cfg_.pid_o_r);
+  
+  comms_.set_pid_l_values(cfg_.pid_p_l,cfg_.pid_d_l,cfg_.pid_i_l,cfg_.pid_o_l);
+  
   RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;

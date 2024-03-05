@@ -106,13 +106,13 @@ public:
   void set_pid_r_values(int k_p, int k_d, int k_i, int k_o)
   {
     std::stringstream ss;
-    ss << "p " << k_p << ":" << k_d << ":" << k_i << ":" << k_o << "\r";
+    ss << "p " <<k_p << ":" << k_d << ":" << k_i << ":" << k_o << "\r";
     send_msg(ss.str());
   }
   void set_pid_l_values(int k_p, int k_d, int k_i, int k_o)
   {
     std::stringstream ss;
-    ss << "u " << k_p << ":" << k_d << ":" << k_i << ":" << k_o << "\r";
+    ss << "u " <<k_p << ":" << k_d << ":" << k_i << ":" << k_o << "\r";
     send_msg(ss.str());
   }
 
