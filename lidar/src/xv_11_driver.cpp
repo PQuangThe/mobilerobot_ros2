@@ -71,7 +71,7 @@ int main(int argc, char * argv[])
 
   auto node = rclcpp::Node::make_shared("xv11_laser");
 
-  std::string port     = "/dev/ttyUSB0";
+  std::string port     = "/dev/ttyUSB1";
   node->declare_parameter<std::string>("port", port);
   node->get_parameter("port", port);
 
