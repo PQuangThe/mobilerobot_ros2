@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(behavior_tree)
+project(behavior_tree_demo_ros2)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -26,7 +26,6 @@ set(dependencies
   nav2_behavior_tree
   nav2_msgs
   behaviortree_cpp
-  #${OTHER_DEPS}
 ) 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -37,11 +36,11 @@ if(BUILD_TESTING)
   # uncomment the line when this package is not in a git repo
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+  #find_package(ament_lint_auto REQUIRED)
 endif()
 
 
 add_executable(bt_main src/bt_main.cpp)
-ament_target_dependencies(bt_main ${dependencies})
 
 install (TARGETS
   bt_main
@@ -53,5 +52,7 @@ install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_target_dependencies(bt_main ${dependencies})
 
 ament_package()
