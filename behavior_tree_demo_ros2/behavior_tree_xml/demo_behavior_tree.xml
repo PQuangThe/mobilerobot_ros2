@@ -1,7 +1,7 @@
 <root BTCPP_format="4">
      <BehaviorTree ID="MainTree">
         <Sequence>
-            <Script code=" Goal_a:='0.579;0.341;3.14' " />
+            <Script code=" Goal_a:='0.579;0.341;0' " />
             <GoToPose  goal="{Goal_a}"/>
         </Sequence>
      </BehaviorTree>

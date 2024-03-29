@@ -49,9 +49,9 @@ class AutonomyNode : public rclcpp::Node {
             // Tick the behavior tree.
             BT::NodeStatus tree_status = tree_.tickOnce();
             if (tree_status == BT::NodeStatus::RUNNING) {
-                tree_.sleep(std::chrono::milliseconds(500));
+                tree_.sleep(std::chrono::milliseconds(100));
                 RCLCPP_INFO(this->get_logger(), "status RUNNING");
-                return;
+                //return;
             }
             // Cancel the timer if we hit a terminal state.
             if (tree_status == BT::NodeStatus::SUCCESS) {
