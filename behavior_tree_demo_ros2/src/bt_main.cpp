@@ -10,8 +10,8 @@
 #include "yaml-cpp/yaml.h"
 #include <behaviortree_cpp/loggers/bt_cout_logger.h>
 
-#include "nav_behavior.h"
-
+//#include "nav_behavior.h"
+#include "navclient2.hpp"
 
 //
 
@@ -48,18 +48,10 @@ class AutonomyNode : public rclcpp::Node {
         void update_behavior_tree() {
             // Tick the behavior tree.
             BT::NodeStatus tree_status = tree_.tickOnce();
-            if (tree_status == BT::NodeStatus::RUNNING) {
-                tree_.sleep(std::chrono::milliseconds(100));
+
+            while (rclcpp::ok() && tree_status == BT::NodeStatus::RUNNING) {
                 RCLCPP_INFO(this->get_logger(), "status RUNNING");
-                //return;
-            }
-            // Cancel the timer if we hit a terminal state.
-            if (tree_status == BT::NodeStatus::SUCCESS) {
-                RCLCPP_INFO(this->get_logger(), "Finished with status SUCCESS");
-                //timer_->cancel();
-            } else if (tree_status == BT::NodeStatus::FAILURE) {
-                RCLCPP_INFO(this->get_logger(), "Finished with status FAILURE");
-                //timer_->cancel();
+                tree_status = tree_.tickWhileRunning(std::chrono::milliseconds(200)); 
             }
         }
 

@@ -100,7 +100,8 @@ class GoToPose : public BT::StatefulActionNode
       q.normalize();
       goal_msg.pose.pose.orientation = tf2::toMsg(q);
 
-      std::cout << "[" << this->name() << "] "<<goal_msg.pose.pose.orientation.z<<" "
+      std::cout << "[" << this->name() << "] "<<goal_msg.pose.pose.orientation.x<<" "<<goal_msg.pose.pose.orientation.y<<" "
+      <<goal_msg.pose.pose.orientation.z<<" "
       <<goal_msg.pose.pose.orientation.w<< std::endl;
       // Send the navigation action goal.
       done_flag_ = false;
@@ -111,17 +112,17 @@ class GoToPose : public BT::StatefulActionNode
     }
     virtual BT::NodeStatus onRunning() override
     {
-        if (done_flag_) {
-        if (nav_result_ == rclcpp_action::ResultCode::SUCCEEDED) {
-        std::cout << "[" << this->name() << "] Goal reached" << std::endl;
-            return BT::NodeStatus::SUCCESS;   
-            } else {
-                std::cout << "[" << this->name() << "] Failed to reach goal" << std::endl;
-                return BT::NodeStatus::FAILURE;   
-            }
-        } else {
-            return BT::NodeStatus::RUNNING;
-        }
+      if (done_flag_) {
+      if (nav_result_ == rclcpp_action::ResultCode::SUCCEEDED) {
+      std::cout << "[" << this->name() << "] Goal reached" << std::endl;
+          return BT::NodeStatus::SUCCESS;   
+          } else {
+              std::cout << "[" << this->name() << "] Failed to reach goal" << std::endl;
+              return BT::NodeStatus::FAILURE;   
+          }
+      } else {
+          return BT::NodeStatus::RUNNING;
+      }
         // std::cout << "[" << this->name() << "] Sent goal success" << std::endl;
         // return BT::NodeStatus::SUCCESS;
     }

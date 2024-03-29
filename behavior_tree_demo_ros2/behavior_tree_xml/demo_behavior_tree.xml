@@ -1,8 +1,18 @@
 <root BTCPP_format="4">
      <BehaviorTree ID="MainTree">
         <Sequence>
-            <Script code=" Goal_a:='0.579;0.341;0' " />
-            <GoToPose  goal="{Goal_a}"/>
+            <Script code=" Goal_a:='1.761;0.0;0.0' " />
+            <Script code=" Goal_b:='1.761;1.476;0' " />
+            <Script code=" Goal_c:='-1.731;1.692;0' " />
+            <Script code=" Goal_d:='0.0;0.0;0' " />
+            <Fallback>
+                <Sequence>
+                    <GoToPose name="go A"  goal="{Goal_a}" />
+                    <GoToPose name="go B"  goal="{Goal_b}" /> 
+                    <GoToPose name="go C"  goal="{Goal_c}" /> 
+                </Sequence>
+                <GoToPose name="go home"  goal="{Goal_d}" /> 
+            </Fallback>
         </Sequence>
      </BehaviorTree>
  </root>
