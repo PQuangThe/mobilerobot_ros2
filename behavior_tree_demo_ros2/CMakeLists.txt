@@ -7,30 +7,42 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+find_package(behaviortree_cpp REQUIRED)
+find_package(std_msgs REQUIRED) 
 find_package(geometry_msgs REQUIRED)
 find_package(nav2_behavior_tree REQUIRED)
 find_package(nav2_msgs REQUIRED)
-find_package(behaviortree_cpp REQUIRED)
-
+find_package(sensor_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 set(dependencies
-  rclcpp
-  rclcpp_action
-  std_msgs
-  geometry_msgs
-  nav2_behavior_tree
-  nav2_msgs
-  behaviortree_cpp
+    rclcpp
+    rclcpp_action
+    ament_index_cpp
+    behaviortree_cpp
+    std_msgs 
+    geometry_msgs
+    nav2_behavior_tree
+    nav2_msgs
+    sensor_msgs
+    tf2 
+    tf2_ros
+    tf2_geometry_msgs
+    yaml-cpp
 ) 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-
+include_directories(include)
 add_executable(bt_main src/bt_main.cpp)
 
 install (TARGETS
