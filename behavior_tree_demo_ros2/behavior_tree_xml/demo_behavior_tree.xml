@@ -1,18 +1,45 @@
 <root BTCPP_format="4">
-     <BehaviorTree ID="MainTree">
+     <BehaviorTree ID="Main_Tree">
         <Sequence>
-            <Script code=" Goal_a:='1.761;0.0;0.0' " />
-            <Script code=" Goal_b:='1.761;1.476;0' " />
-            <Script code=" Goal_c:='-1.731;1.692;0' " />
-            <Script code=" Goal_d:='0.0;0.0;0' " />
+            <Script code=" Goal_a='-0.197;-1.828;1.0' " />
+            <Script code=" Goal_b='2.76;-0.324;0' " />
+            <Script code=" Goal_c='0.269;1.88;0' " />
+            <Script code=" Goal_d='-1.985;-0.33;0' " />
             <Fallback>
                 <Sequence>
-                    <GoToPose name="go A"  goal="{Goal_a}" />
-                    <GoToPose name="go B"  goal="{Goal_b}" /> 
-                    <GoToPose name="go C"  goal="{Goal_c}" /> 
+                    <Repeat num_cycles="3">
+                        <Sequence>
+                            <Delay delay_msec="5000">
+                                <RetryUntilSuccessful num_attempts="3">
+                                    <GoToPose  goal="{Goal_a}" />
+                                </RetryUntilSuccessful>
+                            </Delay>
+                            <Delay delay_msec="5000">
+                                <RetryUntilSuccessful num_attempts="3">
+                                    <GoToPose  goal="{Goal_b}" />
+                                </RetryUntilSuccessful>
+                            </Delay>
+                            <Delay delay_msec="5000">
+                                <RetryUntilSuccessful num_attempts="3">
+                                    <GoToPose  goal="{Goal_c}" />
+                                </RetryUntilSuccessful>
+                            </Delay>
+                        </Sequence>
+                    </Repeat>
+                    <Delay delay_msec="5000">
+                        <RetryUntilSuccessful num_attempts="3">
+                            <GoToPose  goal="{Goal_d}" />
+                        </RetryUntilSuccessful>
+                    </Delay> 
                 </Sequence>
-                <GoToPose name="go home"  goal="{Goal_d}" /> 
+                <Delay delay_msec="5000">
+                    <RetryUntilSuccessful num_attempts="3">
+                        <GoToPose  goal="{Goal_d}" />
+                    </RetryUntilSuccessful>
+                </Delay>
             </Fallback>
         </Sequence>
      </BehaviorTree>
+
+
  </root>

@@ -33,25 +33,29 @@ class AutonomyNode : public rclcpp::Node {
         {
             RCLCPP_INFO(this->get_logger(), "start setup behaviortree");
             factory.registerNodeType<GoToPose>("GoToPose", shared_from_this());
+            //factory.registerSimpleAction("MoveToPoint",
         
-            tree_ = factory.createTreeFromFile(tree_xml_file_);//, blackboard);
+            tree_ =factory.createTreeFromFile(tree_xml_file_);//, blackboard);
+            //tree_ =factory.registerTree("MainTree", tree_xml_file_);
+            //tree_ = factory.createTree("Main_Tree");
 
             BT::StdCoutLogger logger_cout(tree_);
             update_behavior_tree();
             RCLCPP_INFO(this->get_logger(), "started setup behaviortree");
 
-            rclcpp::spin(shared_from_this());
+            //rclcpp::spin(shared_from_this());
             rclcpp::shutdown();
             
         }
 
         void update_behavior_tree() {
             // Tick the behavior tree.
-            BT::NodeStatus tree_status = tree_.tickOnce();
+            //BT::NodeStatus tree_status= tree_.tickOnce();
 
-            while (rclcpp::ok() && tree_status == BT::NodeStatus::RUNNING) {
-                RCLCPP_INFO(this->get_logger(), "status RUNNING");
-                tree_status = tree_.tickWhileRunning(std::chrono::milliseconds(200)); 
+            while (rclcpp::ok()) { //&& tree_status == BT::NodeStatus::RUNNING
+                //RCLCPP_INFO(this->get_logger(), "behavior tree status RUNNING");
+                //tree_status = 
+                tree_.tickWhileRunning(std::chrono::milliseconds(500)); 
             }
         }
 
