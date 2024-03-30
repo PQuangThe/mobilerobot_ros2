@@ -98,11 +98,12 @@ public:
         // goal_msg.pose.pose.orientation.y = 0;
         // goal_msg.pose.pose.orientation.z = goal.quaternion_z;
         // goal_msg.pose.pose.orientation.w = goal.quaternion_w;
-
-        auto goal_handle_future = action_client->async_send_goal(goal_msg);
-        std::cout << "[" << this->name() << "] "<<goal_msg.pose.pose.orientation.x<<" "<<goal_msg.pose.pose.orientation.y<<" "
+        std::cout << "[" << this->name() << "] "<<goal_msg.pose.pose.position.x<<" "<<goal_msg.pose.pose.position.y<<" "
         <<goal_msg.pose.pose.orientation.z<<" "
         <<goal_msg.pose.pose.orientation.w<< std::endl;
+
+        auto goal_handle_future = action_client->async_send_goal(goal_msg);
+        
         if (rclcpp::spin_until_future_complete(node_ptr_, goal_handle_future) !=
                 rclcpp::FutureReturnCode::SUCCESS)
         {
