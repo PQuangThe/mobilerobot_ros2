@@ -18,8 +18,8 @@ amcl:
     laser_min_range: -1.0
     laser_model_type: "likelihood_field"
     max_beams: 60
-    #set_initial_pose: True
-    #initial_pose: {x: 0.0, y: 0.0, z: 0.0, yaw: 0.0}
+    set_initial_pose: True
+    initial_pose: {x: 0.0, y: 0.0, z: 0.0, yaw: 0.0}
     max_particles: 2000
     min_particles: 500
     odom_frame_id: "odom"
