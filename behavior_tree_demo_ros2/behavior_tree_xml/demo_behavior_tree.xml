@@ -40,6 +40,10 @@
             </Fallback>
         </Sequence>
      </BehaviorTree>
-
+    <TreeNodesModel>
+        <Action ID="GoToPose">
+            <input_port name="goal"/>           
+        </Action>
+    </TreeNodesModel>
 
  </root>

@@ -6,7 +6,7 @@
 #include "ament_index_cpp/get_package_share_directory.hpp"
 #include "behaviortree_cpp/bt_factory.h"
 #include "behaviortree_cpp/xml_parsing.h"
-//#include "behaviortree_cpp/loggers/groot2_publisher.h"
+#include "behaviortree_cpp/loggers/groot2_publisher.h"
 #include "yaml-cpp/yaml.h"
 #include <behaviortree_cpp/loggers/bt_cout_logger.h>
 
@@ -38,8 +38,10 @@ class AutonomyNode : public rclcpp::Node {
             tree_ =factory.createTreeFromFile(tree_xml_file_);//, blackboard);
             //tree_ =factory.registerTree("MainTree", tree_xml_file_);
             //tree_ = factory.createTree("Main_Tree");
+            //BT::Groot2Publisher publisher(tree_);
+            publisher_ptr_ = std::make_unique<BT::Groot2Publisher>(tree_, 1668);
+            //BT::StdCoutLogger logger_cout(tree_);
 
-            BT::StdCoutLogger logger_cout(tree_);
             update_behavior_tree();
             RCLCPP_INFO(this->get_logger(), "started setup behaviortree");
 
@@ -67,7 +69,7 @@ class AutonomyNode : public rclcpp::Node {
         // ROS and BehaviorTree.CPP variables.
         //rclcpp::TimerBase::SharedPtr timer_;
         BT::Tree tree_;
-        //std::unique_ptr<BT::Groot2Publisher> publisher_ptr_;
+        std::unique_ptr<BT::Groot2Publisher> publisher_ptr_;
 };
 
 
