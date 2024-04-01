@@ -12,18 +12,18 @@
 
 //#include "nav_behavior.h"
 #include "navclient2.hpp"
-
+#include "spin_behavior.hpp"
 //
 
 const std::string default_bt_xml_file = 
     ament_index_cpp::get_package_share_directory("behavior_tree_demo_ros2") + "/behavior_tree_xml/demo_behavior_tree.xml";
+// const std::string default_bt_xml_file = 
+//     ament_index_cpp::get_package_share_directory("behavior_tree_demo_ros2") + "/behavior_tree_xml/test_tree.xml";
 
 
 class AutonomyNode : public rclcpp::Node {
     public:
         AutonomyNode() : Node("autonomy_node") {
-            // Read the location file and shuffle it
-            // Declare and get the other node parameters.
             this->declare_parameter<std::string>("tree_xml_file", default_bt_xml_file);
             tree_xml_file_ = this->get_parameter("tree_xml_file").as_string();
             RCLCPP_INFO(this->get_logger(), "Searching for tree xml file: %s",
@@ -33,14 +33,14 @@ class AutonomyNode : public rclcpp::Node {
         {
             RCLCPP_INFO(this->get_logger(), "start setup behaviortree");
             factory.registerNodeType<GoToPose>("GoToPose", shared_from_this());
-            //factory.registerSimpleAction("MoveToPoint",
+            factory.registerNodeType<SpinInPlace>("SpinInPlace", shared_from_this());
         
             tree_ =factory.createTreeFromFile(tree_xml_file_);//, blackboard);
-            //tree_ =factory.registerTree("MainTree", tree_xml_file_);
+            
             //tree_ = factory.createTree("Main_Tree");
-            //BT::Groot2Publisher publisher(tree_);
-            publisher_ptr_ = std::make_unique<BT::Groot2Publisher>(tree_, 1668);
-            //BT::StdCoutLogger logger_cout(tree_);
+            
+            //publisher_ptr_ = std::make_unique<BT::Groot2Publisher>(tree_, 1668);
+            BT::StdCoutLogger logger_cout(tree_);
 
             update_behavior_tree();
             RCLCPP_INFO(this->get_logger(), "started setup behaviortree");
@@ -61,15 +61,10 @@ class AutonomyNode : public rclcpp::Node {
             }
         }
 
-        // Configuration parameters.
         std::string tree_xml_file_;
-        //std::string location_file_;
-        //std::string target_color_;
         BT::BehaviorTreeFactory factory;
-        // ROS and BehaviorTree.CPP variables.
-        //rclcpp::TimerBase::SharedPtr timer_;
         BT::Tree tree_;
-        std::unique_ptr<BT::Groot2Publisher> publisher_ptr_;
+        //std::unique_ptr<BT::Groot2Publisher> publisher_ptr_;
 };
 
 
