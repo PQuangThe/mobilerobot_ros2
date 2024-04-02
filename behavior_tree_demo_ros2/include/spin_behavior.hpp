@@ -5,7 +5,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "behaviortree_cpp/behavior_tree.h"
 
-using namespace std::chrono_literals;
+//using namespace std::chrono_literals;
 
 class SpinInPlace : public BT::StatefulActionNode
 {
@@ -16,6 +16,7 @@ class SpinInPlace : public BT::StatefulActionNode
     rclcpp::Time start_time_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
     geometry_msgs::msg::Twist vel_msgs;
+    int spin_time__;
 
     //client_ptr_ = rclcpp_action::create_client<NavigateToPose>(node_ptr_, "navigate_to_pose");
 
@@ -25,9 +26,17 @@ class SpinInPlace : public BT::StatefulActionNode
 
     BT::NodeStatus onStart() override
     {
+        float speed__;
+        
+        if (!getInput<float>("speed", speed__)) {
+            throw BT::RuntimeError("missing required input [goal]");
+        }
+        if (!getInput<int>("spin_time", spin_time__)) {
+            throw BT::RuntimeError("missing required input [goal]");
+        }
         vel_pub_ = node_s_->create_publisher<geometry_msgs::msg::Twist>("/bt_vel", 10);
         //std::cout << "[" << this->name() << "] " << goal_.x<<" ,"<<goal_.y<<" ,"<<goal_.theta_a<<" !!" << std::endl;
-        vel_msgs.angular.z = 0.2;
+        vel_msgs.angular.z = speed__;
         vel_pub_->publish(vel_msgs);
         start_time_ = node_s_->now();
         
@@ -39,7 +48,7 @@ class SpinInPlace : public BT::StatefulActionNode
     BT::NodeStatus onRunning() override
     {
         auto elapsed = node_s_->now() - start_time_;
-        if (elapsed < 5s) {
+        if (elapsed < std::chrono::seconds(spin_time__)) {
             //std::cout << "[" << this->name() << "] Goal reached" << std::endl;
             vel_pub_->publish(vel_msgs);
             return BT::NodeStatus::RUNNING;
@@ -50,5 +59,9 @@ class SpinInPlace : public BT::StatefulActionNode
     
     }
     void onHalted() override {};
-    static BT::PortsList providedPorts() { return {}; };
+    static BT::PortsList providedPorts() { 
+        return { BT::InputPort<float>("speed"),
+             BT::InputPort<int>("spin_time") 
+        }; 
+    };
 };

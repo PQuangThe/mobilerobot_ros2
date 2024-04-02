@@ -46,7 +46,7 @@ class AutonomyNode : public rclcpp::Node {
             RCLCPP_INFO(this->get_logger(), "started setup behaviortree");
 
             //rclcpp::spin(shared_from_this());
-            rclcpp::shutdown();
+            // rclcpp::shutdown();
             
         }
 
@@ -73,6 +73,6 @@ int main(int argc, char **argv)
     rclcpp::init(argc, argv);
     auto node = std::make_shared<AutonomyNode>();
     node->execute();
-    
+    rclcpp::shutdown();
     return 0;
 }
