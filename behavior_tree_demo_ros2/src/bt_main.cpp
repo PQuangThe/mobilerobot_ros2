@@ -51,14 +51,11 @@ class AutonomyNode : public rclcpp::Node {
         }
 
         void update_behavior_tree() {
-            // Tick the behavior tree.
-            //BT::NodeStatus tree_status= tree_.tickOnce();
-
-            while (rclcpp::ok()) { //&& tree_status == BT::NodeStatus::RUNNING
-                //RCLCPP_INFO(this->get_logger(), "behavior tree status RUNNING");
-                //tree_status = 
-                tree_.tickWhileRunning(std::chrono::milliseconds(500)); 
+            BT::NodeStatus tree_status= tree_.tickOnce();
+            while (rclcpp::ok() && tree_status == BT::NodeStatus::RUNNING){
+                tree_status=tree_.tickWhileRunning(std::chrono::milliseconds(100)); 
             }
+
         }
 
         std::string tree_xml_file_;
