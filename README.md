@@ -17,6 +17,7 @@ các nguồn tham khảo:
 
   [andino](https://github.com/Ekumen-OS/andino)
 
+Trước khi build nên chạy:
 ```bash
   rosdep install --from-paths src --ignore-src -r -y
 ```
