@@ -1,33 +1,33 @@
 <root BTCPP_format="4">
      <BehaviorTree ID="Main_Tree">
         <Sequence>
-            <Script code=" Goal_a='1.314;0.898;1.64' " />
-            <Script code=" Goal_b='1.4;-2.5;3.14' " />
-            <Script code=" Goal_c='0;-1.929;4.78' " />
-            <Script code=" Goal_d='0;0;0' " />
+            <Script code=" Home='0;0;0' " />
             <Fallback>
-                <Sequence name="Patrol">
+                <Sequence>
                     <Repeat num_cycles="2">
-                        <Sequence>
+                        <Sequence name="Patrol">
+                            <Script code=" Goal_a='1.314;0.898;1.64' " />
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointA" goal="{Goal_a}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace  name="spin_in_place"/>
+                            <SpinInPlace name="spin_at_A" speed="0.5" spin_time="6"/>
+                            <Script code=" Goal_b='1.4;-2.5;3.14' " />
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointB" goal="{Goal_b}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace  name="spin_in_place"/>
+                            <SpinInPlace name="spin_at_B" speed="0.5" spin_time="6"/>
+                            <Script code=" Goal_c='0;-1.929;4.78' " />
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointC" goal="{Goal_c}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace  name="spin_in_place"/>
+                            <SpinInPlace name="spin_at_C" speed="0.5" spin_time="6"/>
                         </Sequence>
                     </Repeat>
-                    <GoToPose name="GoHome" goal="{Goal_d}" />
+                    <GoToPose name="GoHome" goal="{Home}" />
                 </Sequence>
                 <Delay delay_msec="5000">
                     <RetryUntilSuccessful num_attempts="3">
-                        <GoToPose name="GoHomeError" goal="{Goal_d}" />
+                        <GoToPose name="GoHomeError" goal="{Home}" />
                     </RetryUntilSuccessful>
                 </Delay>
             </Fallback>
@@ -37,7 +37,10 @@
         <Action ID="GoToPose">
             <input_port name="goal"/>           
         </Action>
-        <Action ID="SpinInPlace"/>
+        <Action ID="SpinInPlace">
+            <input_port name="speed"/> 
+            <input_port name="spin_time"/>           
+        </Action>
     </TreeNodesModel>
 
  </root>
