@@ -16,3 +16,5 @@ các nguồn tham khảo:
   [RLCar](https://github.com/RLmodel/RLCar/tree/main/RLCar-ROS2)
 
   [andino](https://github.com/Ekumen-OS/andino)
+
+  rosdep install --from-paths src --ignore-src -r -y
