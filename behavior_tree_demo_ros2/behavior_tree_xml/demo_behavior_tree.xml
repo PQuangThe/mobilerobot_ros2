@@ -10,17 +10,17 @@
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointA" goal="{Goal_a}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace name="spin_at_A" speed="0.5" spin_time="6"/>
+                            <SpinInPlace name="spin_at_A" speed="0.3" spin_time="18"/>
                             <Script code=" Goal_b='1.4;-2.5;3.14' " />
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointB" goal="{Goal_b}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace name="spin_at_B" speed="0.5" spin_time="6"/>
+                            <SpinInPlace name="spin_at_B" speed="0.." spin_time="18"/>
                             <Script code=" Goal_c='0;-1.929;4.78' " />
                             <RetryUntilSuccessful num_attempts="2">
                                 <GoToPose name="go_to_pointC" goal="{Goal_c}" />
                             </RetryUntilSuccessful>
-                            <SpinInPlace name="spin_at_C" speed="0.5" spin_time="6"/>
+                            <SpinInPlace name="spin_at_C" speed="0.3" spin_time="18"/>
                         </Sequence>
                     </Repeat>
                     <GoToPose name="GoHome" goal="{Home}" />

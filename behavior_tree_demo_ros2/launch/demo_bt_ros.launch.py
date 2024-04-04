@@ -10,8 +10,8 @@ def generate_launch_description():
     bt_xml_dir = os.path.join(get_package_share_directory('behavior_tree_demo_ros2'), 'behavior_tree_xml')
 
     # Parameters
-    # bt_xml = LaunchConfiguration('bt_xml', default= bt_xml_dir+'/demo_behavior_tree.xml')
-    bt_xml = LaunchConfiguration('bt_xml', default= bt_xml_dir+'/test_tree.xml')
+    bt_xml = LaunchConfiguration('bt_xml', default= bt_xml_dir+'/demo_behavior_tree.xml')
+    # bt_xml = LaunchConfiguration('bt_xml', default= bt_xml_dir+'/test_tree.xml')
 
     demo_behavior_tree = Node(
         package="behavior_tree_demo_ros2",
